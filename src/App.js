@@ -1,25 +1,43 @@
 import logo from './logo.svg';
 import './App.css';
+import ReactDOM from 'react-dom/client';
+import ReadDisneyCharacter from './components/ReadDisneyCharacters';
+import { Outlet, RouterProvider, createBrowserRouter } from 'react-router-dom';
+import ShortFilms from './components/ShortFilms';
+import TvShows from './components/TvShows';
+import Header from './components/Header';
+
+const appRouter = createBrowserRouter([
+  {
+    path: "/",
+    element: <App/>,
+    children:[
+      {
+        path: "/",
+        element: <ReadDisneyCharacter show="Hello"/>
+      },
+      {
+        path: "/shortfilms",
+        element: <ShortFilms/>
+      },
+      {
+        path: "/tvshows",
+        element: <TvShows/>
+      }
+    ]
+  },
+])
+
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Welcome Disney Characters!!</h1>
+      <Header/>
+      <Outlet/>
     </div>
   );
 }
 
-export default App;
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<RouterProvider router={appRouter}/>);
